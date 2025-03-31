@@ -1,4 +1,4 @@
-#include <onnx/onnx_pb.h>   // ONNX protobuf header
+#include <onnx/onnx.pb.h>   // ONNX protobuf header
 #include <iostream>
 #include <fstream>
 
