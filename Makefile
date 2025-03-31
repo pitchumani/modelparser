@@ -1,8 +1,17 @@
 .DEFAULT_GOAL := all
 CXX=g++
-BUILD_FLAGS=-I ~/install/onnx/include -I include -lonnx -lprotobuf
-LINKER_FLAGS=-L ~/install/onnx/lib64
-ONNX_SRC_DIR=~/code/onnx
+ONNX_SRC_DIR=onnx
+
+onnx_build_dir := `pwd`/onnx/build
+onnx_install_dir := ~/install/onnx
+
+build_onnx: onnx
+	cd onnx && mkdir -p build
+	cd $(onnx_build_dir) && cmake -DCMAKE_INSTALL_PREFIX=$(onnx_install_dir) ..
+	cd $(onnx_build_dir) && make -j4 && make -j4 install
+
+BUILD_FLAGS=-I $(onnx_install_dir)/onnx/include -I include
+LINKER_FLAGS=-L $(onnx_install_dir)/onnx/lib64 -lonnx -lprotobuf
 
 ONNX_PROTOBUF_FILES := $(addprefix include/onnx/, \
 	onnx.pb.cc onnx.pb.h)
@@ -11,7 +20,7 @@ onnx_pb: $(ONNX_PROTOBUF_FILES)
 	mkdir -p include/onnx
 	protoc -I ${ONNX_SRC_DIR}/onnx/ onnx.proto --cpp_out=include/onnx
 
-mparser: onnx_pb
+mparser: build_onnx onnx_pb
 	$(CXX) -o mparser mparser.cpp include/onnx/onnx.pb.cc ${BUILD_FLAGS} ${LINKER_FLAGS}
 
 all: mparser
