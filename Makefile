@@ -10,6 +10,9 @@ build_onnx: onnx
 	cd onnx && mkdir -p build
 	cd $(onnx_build_dir) && cmake -DCMAKE_INSTALL_PREFIX=$(onnx_install_dir) ..
 	cd $(onnx_build_dir) && make -j4 && make -j4 install
+	echo "files in onnx install dir"
+	ls $(onnx_install_dir)/
+	ls $(onnx_install_dir)/lib64
 
 BUILD_FLAGS=-I $(onnx_install_dir)/onnx/include -I include
 LINKER_FLAGS=-L $(onnx_install_dir)/onnx/lib64 -lonnx -lprotobuf
