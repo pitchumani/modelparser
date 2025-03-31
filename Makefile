@@ -15,7 +15,7 @@ build_onnx: onnx
 	ls $(onnx_install_dir)/lib
 
 BUILD_FLAGS=-I $(onnx_install_dir)/onnx/include -I include
-LINKER_FLAGS=-L $(onnx_install_dir)/onnx/lib64 -L $(onnx_install_dir)/onnx/lib -lonnx -lprotobuf
+LINKER_FLAGS=-L $(onnx_install_dir)/onnx/lib64 -L $(onnx_install_dir)/onnx/lib $(onnx_install_dir)/onnx/libonnx.a -lprotobuf
 
 ONNX_PROTOBUF_FILES := $(addprefix include/onnx/, \
 	onnx.pb.cc onnx.pb.h)
