@@ -21,6 +21,7 @@ all: mparser
 # wget https://github.com/onnx/models/blob/main/validated/vision/classification/mobilenet/model/mobilenetv2-12.tar.gz
 
 mobilenetv2_12 := models/mobilenetv2-12/mobilenetv2-12.onnx
+mobilenetv2_12_extract: $(mobilenetv2_12)
 	mkdir -p models
 	wget https://github.com/onnx/models/blob/main/validated/vision/classification/mobilenet/model/mobilenetv2-12.tar.gz
 	cd models
