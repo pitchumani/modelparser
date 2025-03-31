@@ -12,10 +12,10 @@ build_onnx: onnx
 	cd $(onnx_build_dir) && make -j4 && make -j4 install
 	echo "files in onnx install dir"
 	ls $(onnx_install_dir)/
-	ls $(onnx_install_dir)/lib64
+	ls $(onnx_install_dir)/lib
 
 BUILD_FLAGS=-I $(onnx_install_dir)/onnx/include -I include
-LINKER_FLAGS=-L $(onnx_install_dir)/onnx/lib64 -lonnx -lprotobuf
+LINKER_FLAGS=-L $(onnx_install_dir)/onnx/lib64 -L $(onnx_install_dir)/onnx/lib -lonnx -lprotobuf
 
 ONNX_PROTOBUF_FILES := $(addprefix include/onnx/, \
 	onnx.pb.cc onnx.pb.h)
